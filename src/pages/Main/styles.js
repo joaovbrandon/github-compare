@@ -19,15 +19,16 @@ export const Form = styled.form`
     height: 55px;
     padding: 0 20px;
     background: #fff;
-    border: 0;
     font-size: 18px;
     color: #444;
     border-radius: 3px;
+    transition: border 0.5s;
+    border: ${props => (props.repositoryError ? '5px solid #F00' : 0)};
   }
 
   button {
     height: 55px;
-    padding: 0 20px;
+    width: 65px;
     margin-left: 10px;
     background-color: #63f5b8;
     color: #fff;
