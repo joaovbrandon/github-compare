@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
+// Styles
+import GlobalStyle from './styles/global';
+
+// Pages
+import Main from './pages/Main';
 
 const App = () => (
-  <div className="App">
-    <h1>GitHub Compare!</h1>
-  </div>
+  <Fragment>
+    <GlobalStyle />
+    <Main />
+  </Fragment>
 );
 
 export default App;
