@@ -19,6 +19,13 @@ export default class Main extends Component {
     repositories: [],
   };
 
+  async componentDidMount() {
+    this.setState({ loading: true });
+    this.setState({ loading: false, repositories: await this.getLocalRepositories() });
+  }
+
+  getLocalRepositories = async () => JSON.parse(await localStorage.getItem('GitHubCompare@repositories')) || [];
+
   handleAddRepository = async (event) => {
     event.preventDefault();
 
@@ -38,6 +45,11 @@ export default class Main extends Component {
         repositoryInput: '',
         repositories: [newRepository, ...repositories],
       });
+
+      await localStorage.setItem(
+        'GitHubCompare@repositories',
+        JSON.stringify([newRepository, ...repositories]),
+      );
     } catch (err) {
       this.setState({ repositoryError: true });
     } finally {
