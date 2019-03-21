@@ -61,3 +61,38 @@ export const Repository = styled.div`
     }
   }
 `;
+
+export const Button = styled.button`
+  height: 30px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  cursor: pointer;
+  margin-top: 1px;
+  transition: background-color 0.3s;
+
+  &.update {
+    background-color: #54e6a9;
+
+    &:hover {
+      background-color: #52d89f;
+    }
+  }
+
+  &.remove {
+    background-color: #f00;
+
+    &:hover {
+      background-color: #ec0000;
+    }
+  }
+
+  i {
+    margin-right: 5px;
+  }
+`;

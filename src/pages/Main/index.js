@@ -35,6 +35,14 @@ export default class Main extends Component {
 
     this.setState({ loading: true });
 
+    if (repositories.filter(repository => repository.full_name === repositoryInput).length) {
+      this.setState({
+        loading: false,
+        repositoryError: true,
+      });
+      return;
+    }
+
     try {
       const { data: newRepository } = await api.gitHub.get(`/repos/${repositoryInput}`);
 
@@ -52,6 +60,49 @@ export default class Main extends Component {
       );
     } catch (err) {
       this.setState({ repositoryError: true });
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
+
+  handleRemoveRepository = async (id) => {
+    const { repositories } = this.state;
+
+    const updatedRepositories = repositories.filter(repository => repository.id !== id);
+
+    this.setState({ repositories: updatedRepositories });
+
+    await localStorage.setItem('GitHubCompare@repositories', JSON.stringify(updatedRepositories));
+  };
+
+  handleUpdateRepository = async (id) => {
+    const { repositories } = this.state;
+
+    const currentRepository = repositories.find(repository => repository.id === id);
+
+    try {
+      const { data: newRepository } = await api.gitHub.get(`/repos/${currentRepository.full_name}`);
+
+      newRepository.last_commit = moment(newRepository.pushed_at).fromNow();
+
+      const updatedRepositories = repositories.map(repository => (
+        repository.id === newRepository.id ? newRepository : repository
+      ));
+
+      this.setState({
+        repositoryError: false,
+        repositoryInput: '',
+        repositories: updatedRepositories,
+      });
+
+      await localStorage.setItem('GitHubCompare@repositories', JSON.stringify(updatedRepositories));
+    } catch (err) {
+      this.handleRemoveRepository(currentRepository.id);
+
+      this.setState({
+        repositoryError: true,
+        repositoryInput: currentRepository.full_name,
+      });
     } finally {
       this.setState({ loading: false });
     }
@@ -78,7 +129,11 @@ export default class Main extends Component {
           </button>
         </Form>
 
-        <CompareList repositories={repositories} />
+        <CompareList
+          repositories={repositories}
+          updateRepository={this.handleUpdateRepository}
+          removeRepository={this.handleRemoveRepository}
+        />
       </Container>
     );
   }
