@@ -5,7 +5,8 @@ export const Container = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 30px;
+  width: 100%;
 `;
 
 export const Repository = styled.div`
@@ -17,7 +18,9 @@ export const Repository = styled.div`
   margin: 10px;
 
   @media (max-width: 539px) {
-    width: 100%;
+    width: 90%;
+    min-width: 90%;
+    max-width: 90%;
   }
 
   header {

@@ -9,7 +9,7 @@ export const Container = styled.div`
 
 export const Form = styled.form`
   margin-top: 20px;
-  width: 100%;
+  width: 90%;
   max-width: 400px;
   display: flex;
   justify-content: center;
