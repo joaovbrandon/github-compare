@@ -23,6 +23,7 @@ export default class Main extends Component {
   async componentDidMount() {
     this.setState({ loading: true });
     this.setState({ loading: false, repositories: await this.getLocalRepositories() });
+    this.repositoryInput = React.createRef();
   }
 
   getLocalRepositories = async () => JSON.parse(await localStorage.getItem('GitHubCompare@repositories')) || [];
@@ -35,12 +36,17 @@ export default class Main extends Component {
     if (loading || !repositoryInput) return;
 
     this.setState({ loading: true });
+    this.repositoryInput.current.blur();
 
-    if (repositories.filter(repository => repository.full_name === repositoryInput).length) {
+    if (
+      repositories.filter(repository => repository.full_name === repositoryInput.toLowerCase())
+        .length
+    ) {
       this.setState({
         loading: false,
         repositoryError: true,
       });
+      this.repositoryInput.current.focus();
       return;
     }
 
@@ -61,6 +67,7 @@ export default class Main extends Component {
       );
     } catch (err) {
       this.setState({ repositoryError: true });
+      this.repositoryInput.current.focus();
     } finally {
       this.setState({ loading: false });
     }
@@ -108,6 +115,7 @@ export default class Main extends Component {
         repositoryError: true,
         repositoryInput: currentRepository.full_name,
       });
+      this.repositoryInput.current.focus();
     } finally {
       this.setState({
         updatingRepositoriesId: updatingRepositoriesId.filter(
@@ -132,6 +140,7 @@ export default class Main extends Component {
 
         <Form repositoryError={repositoryError} onSubmit={this.handleAddRepository}>
           <input
+            ref={this.repositoryInput}
             type="text"
             placeholder="user/repository"
             value={repositoryInput}
