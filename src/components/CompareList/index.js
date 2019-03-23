@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Container, Repository, Button } from './styles';
 
-const CompareList = ({ repositories, updateRepository, removeRepository }) => (
+const CompareList = ({
+  repositories,
+  updatingRepositoriesId,
+  updateRepository,
+  removeRepository,
+}) => (
   <Container>
     {repositories.map(repository => (
       <Repository key={repository.id}>
@@ -32,8 +37,14 @@ const CompareList = ({ repositories, updateRepository, removeRepository }) => (
         </ul>
 
         <Button className="update" type="button" onClick={() => updateRepository(repository.id)}>
-          <i className="fa fa-retweet" />
-          Update
+          {updatingRepositoriesId.includes(repository.id) ? (
+            <i className="fa fa-spinner fa-pulse" />
+          ) : (
+            <Fragment>
+              <i className="fa fa-retweet" />
+              {' Update'}
+            </Fragment>
+          )}
         </Button>
 
         <Button className="remove" type="button" onClick={() => removeRepository(repository.id)}>

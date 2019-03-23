@@ -17,6 +17,7 @@ export default class Main extends Component {
     repositoryError: false,
     repositoryInput: '',
     repositories: [],
+    updatingRepositoriesId: [],
   };
 
   async componentDidMount() {
@@ -76,7 +77,11 @@ export default class Main extends Component {
   };
 
   handleUpdateRepository = async (id) => {
-    const { repositories } = this.state;
+    const { updatingRepositoriesId, repositories } = this.state;
+
+    if (updatingRepositoriesId.includes(id)) return;
+
+    this.setState(state => ({ updatingRepositoriesId: [id, ...state.updatingRepositoriesId] }));
 
     const currentRepository = repositories.find(repository => repository.id === id);
 
@@ -104,13 +109,21 @@ export default class Main extends Component {
         repositoryInput: currentRepository.full_name,
       });
     } finally {
-      this.setState({ loading: false });
+      this.setState({
+        updatingRepositoriesId: updatingRepositoriesId.filter(
+          updatingRepositorieId => updatingRepositorieId !== id,
+        ),
+      });
     }
   };
 
   render() {
     const {
-      loading, repositoryError, repositoryInput, repositories,
+      loading,
+      updatingRepositoriesId,
+      repositoryError,
+      repositoryInput,
+      repositories,
     } = this.state;
 
     return (
@@ -131,6 +144,7 @@ export default class Main extends Component {
 
         <CompareList
           repositories={repositories}
+          updatingRepositoriesId={updatingRepositoriesId}
           updateRepository={this.handleUpdateRepository}
           removeRepository={this.handleRemoveRepository}
         />
