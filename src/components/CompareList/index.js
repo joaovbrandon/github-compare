@@ -71,6 +71,7 @@ CompareList.propTypes = {
       last_commit: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  updatingRepositoriesId: PropTypes.shape(PropTypes.number.isRequired).isRequired,
   updateRepository: PropTypes.func.isRequired,
   removeRepository: PropTypes.func.isRequired,
 };
