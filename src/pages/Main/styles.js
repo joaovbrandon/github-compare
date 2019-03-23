@@ -9,14 +9,14 @@ export const Container = styled.div`
 
 export const Form = styled.form`
   margin-top: 20px;
-  width: 90%;
-  max-width: 400px;
   display: flex;
   justify-content: center;
 
   input {
-    flex: 1;
     height: 55px;
+    min-height: 55px;
+    width: 260px;
+    min-width: 260px;
     padding: 0 20px;
     background: #fff;
     font-size: 18px;
@@ -28,7 +28,9 @@ export const Form = styled.form`
 
   button {
     height: 55px;
+    min-height: 55px;
     width: 65px;
+    min-width: 65px;
     margin-left: 10px;
     background-color: #54e6a9;
     color: #fff;
@@ -57,5 +59,6 @@ export const EmptyFallback = styled.div`
 
   h3 {
     font-size: 1.2em;
+    padding: 0 20px;
   }
 `;
