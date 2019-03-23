@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { Container, Form } from './styles';
+import { Container, Form, EmptyFallback } from './styles';
 
 // Assets
 import logo from '../../assets/images/github-compare-logo.png';
@@ -141,6 +141,13 @@ export default class Main extends Component {
             {loading ? <i className="fa fa-spinner fa-pulse" /> : <i className="fa fa-plus" />}
           </button>
         </Form>
+
+        {repositories.length === 0 && (
+          <EmptyFallback>
+            <h1>You haven&apos;t added any repositories yet.</h1>
+            <h3>Enter a user and a GitHub repository above.</h3>
+          </EmptyFallback>
+        )}
 
         <CompareList
           repositories={repositories}

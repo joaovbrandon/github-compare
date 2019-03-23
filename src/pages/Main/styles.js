@@ -44,3 +44,18 @@ export const Form = styled.form`
     }
   }
 `;
+
+export const EmptyFallback = styled.div`
+  margin-top: 30px;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+`;
