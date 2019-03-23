@@ -4,7 +4,7 @@ An app to compare Github Repositories built with ReactJS.
 
 See here [www.joaao.eu/github-compare](https://www.joaao.eu/github-compare/).
 
-![GitHub Compare](./github-compare.gif "GitHub Compare")
+![GitHub Compare](./assets/github-compare.gif "GitHub Compare")
 
 ## How to run
 
